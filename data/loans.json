@@ -1,0 +1,14 @@
+[
+    {
+        "loan_id": 1,
+        "user_id": 2,
+        "copy_id": 1,
+        "payment_id": 1,
+        "checkout_date": "2026-10-07",
+        "due_date": "2026-10-07",
+        "return_date": "2026-10-07",
+        "status": "borrowed",
+        "renewal_count": 0,
+        "fine": 20
+    }
+]

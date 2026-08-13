@@ -1,0 +1,9 @@
+[
+    {
+        "book_id": 1,
+        "title": "Book",
+        "author": "author",
+        "category_id": 1,
+        "language": "English"
+    }
+]
