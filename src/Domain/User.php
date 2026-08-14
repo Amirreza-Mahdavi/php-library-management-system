@@ -1,5 +1,7 @@
 <?php
 
+namespace LMS\Domain;
+
 class User {
 
     public function __construct(

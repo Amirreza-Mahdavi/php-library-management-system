@@ -1,5 +1,7 @@
 <?php
 
+namespace LMS\Enums;
+
 enum CopyStatus: string {
 
     case Available = 'available';

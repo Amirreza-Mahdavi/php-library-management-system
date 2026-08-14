@@ -1,5 +1,10 @@
 <?php
 
+namespace LMS\Domain;
+
+use DateTimeImmutable;
+use LMS\Enums\LoanStatus;
+
 class Loan {
 
     public function __construct(

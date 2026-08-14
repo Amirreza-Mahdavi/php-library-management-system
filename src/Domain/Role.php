@@ -1,5 +1,9 @@
 <?php
 
+namespace LMS\Domain;
+
+use LMS\Enums\RoleName;
+
 class Role {
 
     public function __construct(

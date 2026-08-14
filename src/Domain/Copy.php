@@ -1,5 +1,9 @@
 <?php
 
+namespace LMS\Domain;
+
+use LMS\Enums\CopyStatus;
+
 class Copy {
 
     public function __construct(

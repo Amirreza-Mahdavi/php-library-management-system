@@ -1,5 +1,7 @@
 <?php
 
+namespace LMS\Enums;
+
 enum ReservationStatus: string {
 
     case Pending = 'pending';

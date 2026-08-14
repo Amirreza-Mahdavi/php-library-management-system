@@ -1,5 +1,7 @@
 <?php
 
+namespace LMS\Domain;
+
 class Category {
     
     public function __construct(

@@ -1,5 +1,7 @@
 <?php
 
+namespace LMS\Domain;
+
 class Book {
 
     public function __construct(

@@ -1,5 +1,7 @@
 <?php
 
+namespace LMS\Enums;
+
 enum LoanStatus: string {
 
     case Borrowed = 'borrowed';

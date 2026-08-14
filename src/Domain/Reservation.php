@@ -1,5 +1,10 @@
 <?php
 
+namespace LMS\Domain;
+
+use DateTimeImmutable;
+use LMS\Enums\ReservationStatus;
+
 class reservation {
 
     public function __construct(

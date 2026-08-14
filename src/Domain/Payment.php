@@ -1,5 +1,9 @@
 <?php
 
+namespace LMS\Domain;
+
+use DateTimeImmutable;
+
 class Payment {
 
     public function __construct(
