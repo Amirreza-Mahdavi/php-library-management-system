@@ -5,7 +5,7 @@ namespace LMS\Domain;
 use DateTimeImmutable;
 use LMS\Enums\ReservationStatus;
 
-class reservation {
+class Reservation {
 
     public function __construct(
         private readonly int $reservationId,

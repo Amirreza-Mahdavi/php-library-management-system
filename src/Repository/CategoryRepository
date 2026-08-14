@@ -1,0 +1,23 @@
+<?php 
+
+namespace LMS\Respository;
+
+use LMS\Domain\Category;
+
+class CategoryRepository {
+    private string $file = __DIR__ . '/../../data/categories.json';
+
+    private function mapToCategory(): array {
+        $categories = [];
+        $data = json_decode(file_get_contents($this->file), true);
+
+        foreach ($data as $category){
+            $categories[] = new Category(
+                $category['category_id'],
+                $category['category_name']
+            );
+        }
+        return $categories;
+    }
+
+}
