@@ -7,6 +7,28 @@ use LMS\Domain\Reservation;
 class ReservationRepository {
     private string $file = __DIR__ . '/../../data/reservations.json';
 
+    public function findByUserId(int $userId): array {
+        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+        $reservations = [];
+
+        foreach ($data as $reservation) {
+            if ($reservation['user_id'] === $userId)
+                $reservations[] = $this->mapToReservation($reservation);
+        }
+        return $reservations;
+    }
+
+    public function findByBookId(int $bookId): array {
+        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+        $reservations = [];
+
+        foreach ($data as $reservation) {
+            if ($reservation['book_id'] === $bookId)
+                $reservations[] = $this->mapToReservation($reservation);
+        }
+        return $reservations;
+    }
+
     private function mapToReservation(array $reservation): Reservation {
         return new Reservation(
             $reservation['reservation_id'],

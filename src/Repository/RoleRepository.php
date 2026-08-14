@@ -7,6 +7,16 @@ use LMS\Domain\Role;
 class RoleRepository {
     private string $file = __DIR__ . '/../../data/roles.json';
 
+    public function findById(int $id): ?Role {
+        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+
+        foreach ($data as $role) {
+            if ($role['role_id'] === $id)
+                return $this->mapToRole($role);
+        }
+        return null;
+    }
+
     private function mapToRole(array $role): Role {
         return new Role(
             $role['role_id'],
