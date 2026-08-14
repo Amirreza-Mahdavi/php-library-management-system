@@ -13,4 +13,11 @@ class RoleRepository {
             $role['role_name']
         );
     }
+
+    private function mapToStorage(Role $role): array {
+        return [
+            'role_id' => $role->getRoleId(),
+            'role_name' => $role->getRoleName()
+        ];
+    }
 }

@@ -15,4 +15,13 @@ class PaymentRepository {
             $payment['payment_date']
         );
     }
+
+    private function mapToStorage(Payment $payment): array {
+        return [
+            'payment_id' => $payment->getPaymentId(),
+            'loan_id' => $payment->getPaymentLoanId(),
+            'amount' => $payment->getPaymentAmount(),
+            'payment_date' => $payment->getPaymentDaye()
+        ];
+    }
 }

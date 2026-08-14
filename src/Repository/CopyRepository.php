@@ -15,4 +15,13 @@ class CopyRepository {
             $copy['location']
         );
     }
+
+    private function mapToStorage(Copy $copy): array {
+        return [
+            'copy_id' => $copy->getCopyId(),
+            'book_id' => $copy->getCopyBookId(),
+            'status' => $copy->getCopyStatus(),
+            'location' => $copy->getCopyLocation()
+        ];
+    }
 }

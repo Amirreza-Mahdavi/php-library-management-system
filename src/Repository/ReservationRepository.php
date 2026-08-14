@@ -17,4 +17,15 @@ class ReservationRepository {
             $reservation['status']
         );
     }
+
+    private function mapToStorage(Reservation $reservation): array {
+        return [
+            'reservation_id' => $reservation->getReservationId(),
+            'user_id' => $reservation->getReservationUserId(),
+            'book_id' => $reservation->getReservationBookId(),
+            'reservation_date' => $reservation->getReservationDate(),
+            'queue_position' => $reservation->getReservationQueuePosition(),
+            'status' => $reservation->getReservationStatus()
+        ];
+    }
 }

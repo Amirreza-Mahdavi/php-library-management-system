@@ -16,4 +16,14 @@ class UserRepository {
             $user['password']
         );
     }
+
+    private function mapToStorage(User $user): array {
+        return [
+            'user_id' => $user->getUserId(),
+            'name' => $user->getUserName(),
+            'email' => $user->getUserEmail(),
+            'role_id' => $user->getUserRoleId(),
+            'password' =>$user->getUserPassword()
+        ];
+    }
 }

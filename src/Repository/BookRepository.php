@@ -16,4 +16,14 @@ class BookRepository {
             $book['language']
         );
     }
+
+    private function mapToStorage(Book $book): array {
+        return [
+            'book_id' => $book->getBookId(),
+            'title' => $book->getTitle(),
+            'author' => $book->getAuthor(),
+            'category_id' => $book->getCategoryId(),
+            'language' => $book->getLanguage()
+        ];
+    }
 }

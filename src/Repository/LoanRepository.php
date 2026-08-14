@@ -21,4 +21,19 @@ class LoanRepository {
             $loan['fine']
         );
     }
+
+    private function mapToStorage(Loan $loan): array {
+        return [
+            'loan_id' => $loan->getLoanId(),
+            'user_id' => $loan->getLoanUserId(),
+            'copy_id' => $loan->getLoanCopyId(),
+            'payment_id' => $loan->getLoanPaymentId(),
+            'checkout_date' => $loan->getLoanCheckoutDate(),
+            'due_date' => $loan->getLoanDueDate(),
+            'return_date' => $loan->getLoanReturnDate(),
+            'status' => $loan->getLoanStatus(),
+            'renewal_count' => $loan->getLoanRenewalCount(),
+            'fine' => $loan->getLoanFine()
+        ];
+    }
 }

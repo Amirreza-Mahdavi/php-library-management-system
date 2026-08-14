@@ -13,4 +13,11 @@ class CategoryRepository {
             $category['category_name']
         );
     }
+
+    private function mapToStorage(Category $category): array {
+        return [
+            'category_id' => $category->getCategoryId(),
+            'category_name' => $category->getCategoryName()
+        ];
+    }
 }
