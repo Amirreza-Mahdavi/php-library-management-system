@@ -38,4 +38,8 @@ class BookService {
     public function searchByAuthor(string $keyword): array {
         return $this->bookRepository->searchByAuthor($keyword);
     }
+
+    public function filterByCategory(int $categoryId): array {
+        return $this->bookRepository->findByCategoryId($categoryId);
+    }
 }
