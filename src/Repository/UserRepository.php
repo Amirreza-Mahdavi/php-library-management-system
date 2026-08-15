@@ -38,6 +38,50 @@ class UserRepository {
         return null;
     }
 
+    public function updateUserName(int $id, string $name): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+
+        foreach ($data as &$user) {
+            if($user['user_id'] === $id){
+                $user['name'] = $name;
+                break;
+            }
+            unset($user);
+        }
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function updateUserPassword(int $id, string $pass): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+
+        foreach ($data as &$user) {
+            if($user['user_id'] === $id){
+                $user['password'] = password_hash($pass, PASSWORD_DEFAULT);
+                break;
+            }
+            unset($user);
+        }
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function save(User $user): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $data[] = $this->mapToStorage($user);
+
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function remove(int $id): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $newData = [];
+        
+        foreach ($data as $user) {
+            if($user['user_id'] !== $id)
+                $newData[] = $user;
+        }
+        file_put_contents($this->file, json_encode($newData, JSON_PRETTY_PRINT));
+    }
+
     private function mapToUser(array $user): User {
         return new User(
             $user['user_id'],
