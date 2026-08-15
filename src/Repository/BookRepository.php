@@ -37,6 +37,46 @@ class BookRepository {
         return $books;
     }
 
+    public function searchByTitle(string $keyword): array {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $books = [];
+
+        foreach ($data as $book){
+            if(str_contains($book['title'], $keyword))
+                $books[] = $this->mapToBook($book);
+        }
+        return $books;
+    }
+
+    public function searchByAuthor(string $keyword): array {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $books = [];
+
+        foreach ($data as $book){
+            if(str_contains($book['author'], $keyword))
+                $books[] = $this->mapToBook($book);
+        }
+        return $books;
+    }
+
+    public function save(Book $book): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $data[] = $this->mapToStorage($book);
+
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function remove(int $id): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $newData = [];
+        
+        foreach ($data as $book) {
+            if($book['book_id'] !== $id)
+                $newData[] = $book;
+        }
+        file_put_contents($this->file, json_encode($newData, JSON_PRETTY_PRINT));
+    }
+
     private function mapToBook(array $book): Book {
         return new Book(
             $book['book_id'],
