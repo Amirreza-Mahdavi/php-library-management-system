@@ -13,7 +13,7 @@ class LoanRepository {
     use MetadataTrait;
 
     public function findByUserId(int $userId): array {
-         $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
         $loans = [];
 
         foreach ($data as $loan) {
