@@ -15,6 +15,10 @@ class BookService {
 
     private BookRepository $bookRepository;
     use MetadataTrait;
+
+    public function findById(int $id): ?Book {
+        return $this->bookRepository->findById($id);
+    }
     
     public function addBook(AddBookRequest $request): void {
         $book = new Book(

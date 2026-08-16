@@ -132,5 +132,4 @@ class LoanService {
         }
         throw new Exception("No available copies with book id: $bookId");
     }
-
 }
