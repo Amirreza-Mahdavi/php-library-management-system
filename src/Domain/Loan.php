@@ -19,7 +19,7 @@ class Loan {
         private int $renewalCount,
         private float $fine
     ){}
-    
+
     public function getLoanId(){
         return $this->loanId;
     }
@@ -49,6 +49,16 @@ class Loan {
     }
     public function getLoanFine(){
         return $this->fine;
+    }
+
+    public function setReturnDate(DateTimeImmutable $returnDate): void{
+        $this->returnDate = $returnDate;
+    }
+    public function setLoanStatus(LoanStatus $status): void {
+        $this->status = $status;
+    }
+    public function setFine(float $fine): void {
+        $this->fine = $fine;
     }
 
 }

@@ -3,12 +3,12 @@
 namespace LMS\Service;
 
 use Exception;
+use DateTimeImmutable;
 use LMS\Repository\BookRepository;
 use LMS\DTO\AddBookRequest;
 use LMS\Traits\MetadataTrait;
 use LMS\Domain\Book;
 use LMS\DTO\CreateLoanRequest;
-use LMS\DTO\CreatePaymentRequest;
 use LMS\Repository\UserRepository;
 use LMS\Repository\CopyRepository;
 use LMS\Repository\LoanRepository;
@@ -17,7 +17,8 @@ use LMS\Domain\Loan;
 use LMS\Enums\LoanStatus;
 use LMS\Domain\Payment;
 use LMS\Domain\Copy;
-use DateTimeImmutable;
+use LMS\Enums\CopyStatus;
+
 
 class BookService {
 
@@ -96,5 +97,42 @@ class BookService {
         $this->paymentRepository->save($payment);
         
         return $copy;
+    }
+
+    public function returnBook(int $userId, int $copyId): void {
+        $copy = $this->copyRepository->findById($copyId);
+        if($copy == null)
+            throw new Exception("Copy not found with id: $copyId");
+
+        $loan = $this->loanRepository->findByUserIdAndCopyId($userId, $copyId);
+        if($loan == null)
+            throw new Exception("Loan not found with user id: $userId and copy id: $copyId");
+
+        $copy->setStatus(CopyStatus::Available);
+
+        $loan->setReturnDate(new DateTimeImmutable());
+        $loan->setFine($this->calculateFine($loan->getLoanDueDate(), $loan->getLoanReturnDate()));
+        $loan->setLoanStatus(LoanStatus::Returned);
+
+        $this->copyRepository->save($copy);
+        $this->loanRepository->save($loan);
+        
+        if($loan->getLoanFine() > 0){
+            $payment = new Payment(
+                $this->getNextId("payment"),
+                $loan->getLoanId(),
+                $loan->getLoanFine(),
+                new DateTimeImmutable()
+            );
+            $this->paymentRepository->save($payment);
+        }
+    }
+
+    private function calculateFine(DateTimeImmutable $dueDate, DateTimeImmutable $returnDate): float {
+        if($returnDate <=  $dueDate)
+            return 0;
+
+        $daysLate = $dueDate->diff($returnDate)->days;
+        return $daysLate * 7;
     }
 }

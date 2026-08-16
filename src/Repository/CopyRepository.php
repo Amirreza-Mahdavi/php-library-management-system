@@ -9,6 +9,16 @@ use LMS\Enums\CopyStatus;
 class CopyRepository {
     private string $file = __DIR__ . '/../../data/copies.json';
 
+    public function findById(int $id): ?Copy {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+
+        foreach ($data as $copy) {
+            if ($copy['copy_id'] === $id)
+                return $copy;
+        }
+        return null;
+    }
+
     public function findByBookId(int $bookId): array {
         $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
         $copies = [];

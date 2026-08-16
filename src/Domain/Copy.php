@@ -25,5 +25,9 @@ class Copy {
     public function getCopyLocation(){
         return $this->location;
     }
+
+    public function setStatus(CopyStatus $status): void {
+        $this->status = $status;
+    }
     
 }

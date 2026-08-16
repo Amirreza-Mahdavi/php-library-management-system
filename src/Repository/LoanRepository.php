@@ -23,6 +23,17 @@ class LoanRepository {
         return $loans;
     }
 
+    public function findByUserIdAndCopyId(int $userId, int $copyId): ?Loan {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+
+        foreach ($data as $loan) {
+            if ($loan['user_id'] === $userId && $loan['copy_id'] === $copyId)
+                return $this->mapToLoan($loan);
+        }
+        return null;
+    }
+
+
     public function save(Loan $loan): void {
         $data = json_decode(file_get_contents($this->file), true) ?? [];
         $data[] = $this->mapToStorage($loan);
