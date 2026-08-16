@@ -2,10 +2,15 @@
 
 namespace LMS\Repository;
 
+use DateTimeImmutable;
 use LMS\Domain\Loan;
+use LMS\DTO\CreateLoanRequest;
+use LMS\Enums\LoanStatus;
+use LMS\Traits\MetadataTrait;
 
 class LoanRepository {
     private string $file = __DIR__ . '/../../data/loans.json';
+    use MetadataTrait;
 
     public function findByUserId(int $userId): array {
         $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
@@ -16,6 +21,24 @@ class LoanRepository {
                 $loans[] = $this->mapToLoan($loan);
         }
         return $loans;
+    }
+
+    public function save(Loan $loan): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $data[] = $this->mapToStorage($loan);
+
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function remove(int $id): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $newData = [];
+        
+        foreach ($data as $loan) {
+            if($loan['loan_id'] !== $id)
+                $newData[] = $loan;
+        }
+        file_put_contents($this->file, json_encode($newData, JSON_PRETTY_PRINT));
     }
 
     private function mapToLoan(array $loan): Loan {

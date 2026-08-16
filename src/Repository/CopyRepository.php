@@ -2,6 +2,7 @@
 
 namespace LMS\Repository;
 
+use Exception;
 use LMS\Domain\Copy;
 use LMS\Enums\CopyStatus;
 
@@ -24,7 +25,7 @@ class CopyRepository {
         $copies = [];
 
         foreach ($data as $copy) {
-            if ($copy['status'] === $status)
+            if ($copy['status'] === $status->value)
                 $copies[] = $this->mapToCopy($copy);
         }
         return $copies;
@@ -38,9 +39,19 @@ class CopyRepository {
                 $copy['status'] = $status->value;
                 break;
             }
-            unset($copy);
         }
+        unset($copy);
         file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    public function findAvailableCopy(int $bookId): Copy {
+        foreach ($this->findByBookId($bookId) as $copy) {
+            if($copy->getCopyStatus === CopyStatus::Available){
+                $this->updateStatus($copy->getCopyId, CopyStatus::Borrowed);
+                return $copy;
+            }
+        }
+        throw new Exception("No available copies with book id: $bookId");
     }
 
     public function save(Copy $copy): void {

@@ -10,7 +10,7 @@ class Payment {
         private readonly int $paymentId,
         private readonly int $loanId,
         private float $amount,
-        private readonly DateTimeImmutable $paymentDate
+        private readonly ?DateTimeImmutable $paymentDate
     ){}
 
     public function getPaymentId(){
