@@ -11,7 +11,7 @@ class PaymentRepository {
     use MetadataTrait;
 
     public function findByLoanId(int $loanId): ?Payment {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         foreach ($data as $payment) {
             if ($payment['loan_id'] === $loanId)

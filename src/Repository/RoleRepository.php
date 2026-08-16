@@ -8,7 +8,7 @@ class RoleRepository {
     private string $file = __DIR__ . '/../../data/roles.json';
 
     public function findById(int $id): ?Role {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         foreach ($data as $role) {
             if ($role['role_id'] === $id)

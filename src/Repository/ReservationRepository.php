@@ -8,7 +8,7 @@ class ReservationRepository {
     private string $file = __DIR__ . '/../../data/reservations.json';
 
     public function findByUserId(int $userId): array {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
         $reservations = [];
 
         foreach ($data as $reservation) {
@@ -19,7 +19,7 @@ class ReservationRepository {
     }
 
     public function findByBookId(int $bookId): array {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
         $reservations = [];
 
         foreach ($data as $reservation) {

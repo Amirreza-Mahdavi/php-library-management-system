@@ -20,7 +20,7 @@ class CopyRepository {
     }
 
     public function findByBookId(int $bookId): array {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
         $copies = [];
 
         foreach ($data as $copy) {

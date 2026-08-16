@@ -8,7 +8,7 @@ class BookRepository {
     private string $file = __DIR__ . '/../../data/books.json';
 
     public function findAll(): array {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         return array_map(
             fn($book) => $this->mapToBook($book),
@@ -17,7 +17,7 @@ class BookRepository {
     }
 
     public function findById(int $id): ?Book {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         foreach ($data as $book) {
             if ($book['book_id'] === $id)
@@ -27,7 +27,7 @@ class BookRepository {
     }
 
     public function findByCategoryId(int $categoryId): array {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
         $books = [];
 
         foreach ($data as $book) {

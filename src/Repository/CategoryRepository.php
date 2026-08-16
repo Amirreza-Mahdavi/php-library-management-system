@@ -8,7 +8,7 @@ class CategoryRepository {
     private string $file = __DIR__ . '/../../data/categories.json';
 
     public function findAll(): array {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         return array_map(
             fn($category) => $this->mapToCategory($category),
@@ -17,7 +17,7 @@ class CategoryRepository {
     }
 
     public function findById(int $id): ?Category {
-        $data = json_decode(file_get_contents($this->file), true, LOCK_EX);
+         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         foreach ($data as $category) {
             if ($category['category_id'] === $id)
