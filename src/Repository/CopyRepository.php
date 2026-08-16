@@ -54,16 +54,6 @@ class CopyRepository {
         file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
     }
 
-    public function findAvailableCopy(int $bookId): Copy {
-        foreach ($this->findByBookId($bookId) as $copy) {
-            if($copy->getCopyStatus === CopyStatus::Available){
-                $this->updateStatus($copy->getCopyId, CopyStatus::Borrowed);
-                return $copy;
-            }
-        }
-        throw new Exception("No available copies with book id: $bookId");
-    }
-
     public function save(Copy $copy): void {
         $data = json_decode(file_get_contents($this->file), true) ?? [];
         $data[] = $this->mapToStorage($copy);

@@ -27,6 +27,7 @@ class BookService {
     private CopyRepository $copyRepository;
     private LoanRepository $loanRepository;
     private PaymentRepository $paymentRepository;
+    private const MAX_RENEWALS = 3;
     use MetadataTrait;
     
     public function addBook(AddBookRequest $request): void {
@@ -71,7 +72,7 @@ class BookService {
             throw new Exception("Book not found with book id: $loanRequest->copyId");
         $book = $this->bookRepository->findById($loanRequest->copyId);
 
-        $copy = $this->copyRepository->findAvailableCopy($book->getBookId());
+        $copy = $this->findAvailableCopy($book->getBookId());
 
         $loan = new Loan(
             $loanId,
@@ -116,7 +117,7 @@ class BookService {
 
         $this->copyRepository->save($copy);
         $this->loanRepository->save($loan);
-        
+
         if($loan->getLoanFine() > 0){
             $payment = new Payment(
                 $this->getNextId("payment"),
@@ -128,11 +129,42 @@ class BookService {
         }
     }
 
+    public function renewLoan(int $userId, int $copyId): void {
+        $copy = $this->copyRepository->findById($copyId);
+        if($copy == null)
+            throw new Exception("Copy not found with id: $copyId");
+
+        $loan = $this->loanRepository->findByUserIdAndCopyId($userId, $copyId);
+        if($loan == null)
+            throw new Exception("Loan not found with user id: $userId and copy id: $copyId");
+        if($loan->getLoanStatus() === LoanStatus::Returned)
+            throw new Exception("Can't renew a returned loan");
+        if(new DateTimeImmutable() > $loan->getLoanDueDate())
+            throw new Exception("Can't renew an overdue loan");
+        if($loan->getLoanRenewalCount() >= self::MAX_RENEWALS)
+            throw new Exception("Maximum number of renewals reached");
+
+        $loan->setDueDate($loan->getLoanDueDate()->modify('+7 days'));
+        $loan->setRenewalCount($loan->getLoanRenewalCount() + 1);
+
+        $this->loanRepository->save($loan);
+    }
+
     private function calculateFine(DateTimeImmutable $dueDate, DateTimeImmutable $returnDate): float {
         if($returnDate <=  $dueDate)
             return 0;
 
         $daysLate = $dueDate->diff($returnDate)->days;
         return $daysLate * 7;
+    }
+
+    private function findAvailableCopy(int $bookId): Copy {
+        foreach ($this->copyRepository->findByBookId($bookId) as $copy) {
+            if($copy->getCopyStatus === CopyStatus::Available){
+                $this->copyRepository->updateStatus($copy->getCopyId, CopyStatus::Borrowed);
+                return $copy;
+            }
+        }
+        throw new Exception("No available copies with book id: $bookId");
     }
 }

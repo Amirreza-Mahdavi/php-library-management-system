@@ -54,8 +54,14 @@ class Loan {
     public function setReturnDate(DateTimeImmutable $returnDate): void{
         $this->returnDate = $returnDate;
     }
+    public function setDueDate(DateTimeImmutable $dueDate): void {
+        $this->dueDate = $dueDate;
+    }
     public function setLoanStatus(LoanStatus $status): void {
         $this->status = $status;
+    }
+    public function setRenewalCount(int $count): void {
+        $this->renewalCount = $count;
     }
     public function setFine(float $fine): void {
         $this->fine = $fine;
