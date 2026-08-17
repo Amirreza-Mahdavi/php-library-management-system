@@ -67,20 +67,4 @@ class MemberMenu extends UserMenu {
                 return true;
         }
     }
-
-    private function showBorrowedBooks(): void {
-        $user = $this->authService->getCurrentUser();
-
-        try {
-            $books = $this->userService->getBorrowedBooks($user->getUserId());
-            foreach ($books as $book) {
-                $this->console->writeLine(
-                    "{$book->getBookId()} - {$book->getTitle()} by {$book->getAuthor()}"
-                );
-            }
-        }
-        catch(Exception $e){
-            $this->console->error($e->getMessage());
-        }
-    }
 }

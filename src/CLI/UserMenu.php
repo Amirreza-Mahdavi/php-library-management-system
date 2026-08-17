@@ -48,6 +48,22 @@ abstract class UserMenu {
         }
     }
 
+    protected function showBorrowedBooks(): void {
+        $user = $this->authService->getCurrentUser();
+
+        try {
+            $books = $this->userService->getBorrowedBooks($user->getUserId());
+            foreach ($books as $book) {
+                $this->console->writeLine(
+                    "{$book->getBookId()} - {$book->getTitle()} by {$book->getAuthor()}"
+                );
+            }
+        }
+        catch(Exception $e){
+            $this->console->error($e->getMessage());
+        }
+    }
+
     protected function searchBooksByTitle(): void {
         $keyword = $this->console->readLine("Search a book title: ");
 
