@@ -8,13 +8,15 @@ use LMS\Service\AuthService;
 use LMS\Service\BookService;
 use LMS\CLI\Console;
 
-class MemberMenu {
+class MemberMenu extends UserMenu {
     public function __construct(
-        private readonly UserService $userService,
-        private readonly AuthService $authService,
-        private readonly BookService $bookService,
-        private readonly Console $console
-    ){}
+        UserService $userService,
+        AuthService $authService,
+        BookService $bookService,
+        Console $console
+    ){
+        parent::__construct($authService, $userService, $bookService, $console);
+    }
 
     public function showMenu(): bool {
         $this->console->writeLine("1. Show User Information");
@@ -66,35 +68,6 @@ class MemberMenu {
         }
     }
 
-    private function showUserInfo(): void {
-        $user = $this->authService->getCurrentUser();
-
-        $this->console->writeLine("Id: {$user->getUserId()}");
-        $this->console->writeLine("Name: {$user->getUserName()}");
-        $this->console->writeLine("Email: {$user->getUserEmail()}");
-    }
-
-    private function updateName(): void {
-        $user = $this->authService->getCurrentUser();
-        $newName = $this->console->readLine("Enter new name: ");
-
-        $this->userService->updateUserName($user->getUserId(), $newName);
-    }
-
-    private function updatePassword(): void {
-        $user = $this->authService->getCurrentUser();
-        $oldPass = $this->console->readLine("Enter old password: ");
-        $newPass = $this->console->readLine("Enter new password: ");
-
-        try {
-            $this->userService->updateUserPassword($user->getUserId(), $oldPass, $newPass);
-            $this->console->success("Change Password successful");
-        }
-        catch(Exception $e){
-            $this->console->error($e->getMessage());
-        }
-    }
-
     private function showBorrowedBooks(): void {
         $user = $this->authService->getCurrentUser();
 
@@ -109,52 +82,5 @@ class MemberMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
-    }
-
-    private function searchBooksByTitle(): void {
-        $keyword = $this->console->readLine("Search a book title: ");
-
-        $books = $this->bookService->searchByTitle($keyword);
-
-        if(empty($books))
-            $this->console->error("No books found");
-        foreach ($books as $book) {
-            $this->console->writeLine(
-                "{$book->getBookId()} - {$book->getTitle()} by {$book->getAuthor()}"
-            );
-        }
-    }
-
-    private function searchBooksByAuthor(): void {
-        $keyword = $this->console->readLine("Search a book author: ");
-
-        $this->displayBooks($this->bookService->searchByAuthor($keyword));
-    }
-
-    private function filterBooksByCategory(): void {
-        $id = $this->console->readInt("Enter Category Id: ");
-
-        $this->displayBooks($this->bookService->filterByCategory($id));
-    }
-
-    private function showBooks(): void {
-        $this->displayBooks($this->bookService->getBooks());
-    }
-
-    private function displayBooks(array $books): void {
-        if(empty($books)){
-            $this->console->error("No books found");
-            return;
-        }
-        foreach ($books as $book) {
-            $this->console->writeLine(
-                "{$book->getBookId()} - {$book->getTitle()} by {$book->getAuthor()}"
-            );
-        }
-    }
-
-    private function logout(): void {
-        $this->authService->logout();
-        $this->console->success("Logout successful");
     }
 }

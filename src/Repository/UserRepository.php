@@ -19,7 +19,7 @@ class UserRepository {
     }
 
     public function findByRoleId(int $roleId): array {
-         $data = json_decode(file_get_contents($this->file), true) ?? [];
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
         $users = [];
 
         foreach ($data as $user) {
