@@ -30,8 +30,8 @@ class UserService {
         $this->userRepository->updateUserName($userId, $name);
     }
 
-    public function updateUserPassword(int $userId, string $pass): void {
-        $this->userRepository->updateUserPassword($userId, $pass);
+    public function updateUserPassword(int $userId, string $oldPass, string $newPass): void {
+        $this->userRepository->updateUserPassword($userId, $oldPass, $newPass);
     }
 
     public function getBorrowedCopies(int $id): array {
