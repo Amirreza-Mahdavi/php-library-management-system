@@ -39,7 +39,7 @@ class AuthMenu {
         }
     }
 
-    public function login(): void {
+    private function login(): void {
         $email = $this->console->readLine("Email: ");
         $password = $this->console->readLine("Password: ");
 
@@ -52,7 +52,7 @@ class AuthMenu {
         }
     }
 
-    public function register(): void {
+    private function register(): void {
         $name = $this->console->readLine("Name: ");
         $email = $this->console->readLine("Email: ");
         $password = $this->console->readLine("Password: ");
