@@ -2,6 +2,7 @@
 
 namespace LMS\Repository;
 
+use Exception;
 use LMS\Domain\User;
 
 class UserRepository {
@@ -51,17 +52,23 @@ class UserRepository {
         file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
     }
 
-    public function updateUserPassword(int $id, string $pass): void {
+    public function updateUserPassword(int $id, string $oldPass, string $newPass): void {
         $data = json_decode(file_get_contents($this->file), true) ?? [];
 
         foreach ($data as &$user) {
-            if($user['user_id'] === $id){
-                $user['password'] = password_hash($pass, PASSWORD_DEFAULT);
+            if($user['user_id'] === $id && password_verify($oldPass, $user['password'])){
+                $this->checkPassword($oldPass, $newPass);
+                $user['password'] = password_hash($newPass, PASSWORD_DEFAULT);
                 break;
             }
             unset($user);
         }
         file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    private function checkPassword(string $oldPass, string $newPass): void {
+        if ($oldPass === $newPass)
+            throw new Exception("New password matches previous password");
     }
 
     public function save(User $user): void {
