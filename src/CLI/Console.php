@@ -3,7 +3,8 @@
 namespace LMS\CLI;
 
 class Console {
-    public function readInput(string $prompt): string {
+
+    public function readLine(string $prompt): string {
         echo $prompt;
         return trim(fgets(STDIN));
     }
@@ -13,7 +14,7 @@ class Console {
         return trim(fgets(STDIN));
     }
 
-    public function wruteLine(string $message): void {
+    public function writeLine(string $message): void {
         echo $message . PHP_EOL;
     }
 
@@ -24,6 +25,4 @@ class Console {
     public function error(string $message): void {
         echo "[ERROR] " . $message . PHP_EOL;
     }
-    
-
 }
