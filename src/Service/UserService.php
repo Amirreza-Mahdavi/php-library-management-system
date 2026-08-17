@@ -8,6 +8,7 @@ use LMS\Traits\MetadataTrait;
 use LMS\Domain\User;
 use LMS\Repository\LoanRepository;
 use LMS\Repository\CopyRepository;
+use LMS\Repository\BookRepository;
 
 class UserService {
     use MetadataTrait;
@@ -15,7 +16,8 @@ class UserService {
     public function __construct(
         private UserRepository $userRepository,
         private LoanRepository $loanRepository,
-        private CopyRepository $copyRepository
+        private CopyRepository $copyRepository,
+        private BookRepository $bookRepository
     ){}
 
     public function getMembers(): array {
@@ -34,17 +36,18 @@ class UserService {
         $this->userRepository->updateUserPassword($userId, $oldPass, $newPass);
     }
 
-    public function getBorrowedCopies(int $id): array {
-        $copies = [];
+    public function getBorrowedBooks(int $id): array {
+        $books = [];
         $loans = $this->loanRepository->findByUserId($id);
         if(empty($loans))
             throw new Exception("User with id: $id hasn't borrowed anything");
 
         foreach ($loans as $loan) {
             $copy = $this->copyRepository->findById($loan->getLoanCopyId());
-            if($copy !== null)
-                $copies[] = $copy;
+            $book = $this->bookRepository->findById($copy->getCopyBookId());
+            if($book !== null)
+                $books[] = $book;
         }
-        return $copies;
+        return $books;
     }
 }
