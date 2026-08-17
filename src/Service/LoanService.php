@@ -18,13 +18,16 @@ use LMS\Domain\Copy;
 use LMS\Enums\CopyStatus;
 
 class LoanService {
-    private BookRepository $bookRepository;
-    private UserRepository $userRepository;
-    private CopyRepository $copyRepository;
-    private LoanRepository $loanRepository;
-    private PaymentRepository $paymentRepository;
     private const MAX_RENEWALS = 3;
     use MetadataTrait;
+
+    public function __construct(
+        private readonly BookRepository $bookRepository,
+        private readonly UserRepository $userRepository,
+        private readonly CopyRepository $copyRepository,
+        private readonly LoanRepository $loanRepository,
+        private readonly PaymentRepository $paymentRepository
+    ){}
 
     public function checkoutBook(CreateLoanRequest $loanRequest, float $amount): Copy {
         $loanId = $this->getNextId("loan");

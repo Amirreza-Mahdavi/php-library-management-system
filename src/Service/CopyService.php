@@ -9,9 +9,11 @@ use LMS\DTO\AddCopyRequest;
 use LMS\Enums\CopyStatus;
 
 class CopyService {
-
-    private CopyRepository $copyRepository;
     use MetadataTrait;
+
+    public function __construct(
+        private readonly CopyRepository $copyRepository
+    ){}
 
     public function getCopies(int $bookId): array {
         return $this->copyRepository->findByBookId($bookId);

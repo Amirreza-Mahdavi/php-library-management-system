@@ -11,7 +11,10 @@ use LMS\Traits\MetadataTrait;
 class AuthService {
     use MetadataTrait;
     private ?User $currentUser = null;
-    private UserRepository $userRepository;
+
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ){}
 
     public function register(RegisterRequest $request): void {
         if($this->userRepository->findByEmail($request->email) !== null)
@@ -53,7 +56,4 @@ class AuthService {
         if($this->currentUser->getUserRoleId() !== 1)
             throw new Exception("Access denied");
     }
-
-    
-
 }

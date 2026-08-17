@@ -6,15 +6,13 @@ use LMS\Repository\BookRepository;
 use LMS\DTO\AddBookRequest;
 use LMS\Traits\MetadataTrait;
 use LMS\Domain\Book;
-use LMS\Repository\UserRepository;
-use LMS\Repository\CopyRepository;
-use LMS\Repository\LoanRepository;
-use LMS\Repository\PaymentRepository;
 
 class BookService {
-
-    private BookRepository $bookRepository;
     use MetadataTrait;
+
+    public function __construct(
+        private readonly BookRepository $bookRepository
+    ){}
 
     public function findById(int $id): ?Book {
         return $this->bookRepository->findById($id);

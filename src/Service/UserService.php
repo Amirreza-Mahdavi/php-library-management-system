@@ -8,13 +8,15 @@ use LMS\Traits\MetadataTrait;
 use LMS\Domain\User;
 use LMS\Repository\LoanRepository;
 use LMS\Repository\CopyRepository;
-use LMS\Domain\Loan;
 
 class UserService {
-    private UserRepository $userRepository;
-    private LoanRepository $loanRepository;
-    private CopyRepository $copyRepository;
     use MetadataTrait;
+
+    public function __construct(
+        private UserRepository $userRepository,
+        private LoanRepository $loanRepository,
+        private CopyRepository $copyRepository
+    ){}
 
     public function getMembers(): array {
         return $this->userRepository->findByRoleId(2);
