@@ -11,7 +11,7 @@ class Console {
 
     public function readInt(string $prompt): int {
         echo $prompt;
-        return trim(fgets(STDIN));
+        return (int) trim(fgets(STDIN));
     }
 
     public function writeLine(string $message): void {
