@@ -77,14 +77,16 @@ class LoanService {
         if($loan == null)
             throw new Exception("Loan not found with user id: $userId and copy id: $copyId");
 
-        $copy->setStatus(CopyStatus::Available);
+        if($copy->getCopyStatus() === CopyStatus::Available)
+            throw new Exception("Copy already returned");
+        $this->copyRepository->updateStatus($copy->getCopyId(), CopyStatus::Available);
 
-        $loan->setReturnDate(new DateTimeImmutable());
-        $loan->setFine($this->calculateFine($loan->getLoanDueDate(), $loan->getLoanReturnDate()));
-        $loan->setLoanStatus(LoanStatus::Returned);
-
-        $this->copyRepository->save($copy);
-        $this->loanRepository->save($loan);
+        $this->loanRepository->updateLoanWhileReturninBook(
+            $loan->getLoanId(),
+            new DateTimeImmutable(),
+            $this->calculateFine($loan->getLoanDueDate(), $loan->getLoanReturnDate()),
+            LoanStatus::Returned
+        );
 
         if($loan->getLoanFine() > 0){
             $payment = new Payment(
