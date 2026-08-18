@@ -42,7 +42,7 @@ class BookRepository {
         $books = [];
 
         foreach ($data as $book){
-            if(str_contains($book['title'], $keyword))
+            if(mb_stripos($book['title'], $keyword) !== false)
                 $books[] = $this->mapToBook($book);
         }
         return $books;
@@ -53,7 +53,7 @@ class BookRepository {
         $books = [];
 
         foreach ($data as $book){
-            if(str_contains($book['author'], $keyword))
+            if(mb_stripos($book['author'], $keyword) !== false)
                 $books[] = $this->mapToBook($book);
         }
         return $books;
