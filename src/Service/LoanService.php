@@ -128,8 +128,8 @@ class LoanService {
 
     private function findAvailableCopy(int $bookId): Copy {
         foreach ($this->copyRepository->findByBookId($bookId) as $copy) {
-            if($copy->getCopyStatus === CopyStatus::Available){
-                $this->copyRepository->updateStatus($copy->getCopyId, CopyStatus::Borrowed);
+            if($copy->getCopyStatus() === CopyStatus::Available){
+                $this->copyRepository->updateStatus($copy->getCopyId(), CopyStatus::Borrowed);
                 return $copy;
             }
         }
