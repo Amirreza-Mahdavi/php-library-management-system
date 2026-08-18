@@ -30,9 +30,6 @@ class LoanService {
     ){}
 
     public function checkoutBook(CreateLoanRequest $loanRequest, float $amount): Copy {
-        $loanId = $this->getNextId("loan");
-        $paymentId = $this->getNextId("payment");
-
         if($this->userRepository->findById($loanRequest->userId) == null)
             throw new Exception("User not found with user id: $loanRequest->userId");
         
@@ -41,6 +38,9 @@ class LoanService {
         $book = $this->bookRepository->findById($loanRequest->copyId);
 
         $copy = $this->findAvailableCopy($book->getBookId());
+
+        $loanId = $this->getNextId("loan");
+        $paymentId = $this->getNextId("payment");
 
         $loan = new Loan(
             $loanId,
