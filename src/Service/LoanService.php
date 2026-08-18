@@ -114,10 +114,11 @@ class LoanService {
         if($loan->getLoanRenewalCount() >= self::MAX_RENEWALS)
             throw new Exception("Maximum number of renewals reached");
 
-        $loan->setDueDate($loan->getLoanDueDate()->modify('+7 days'));
-        $loan->setRenewalCount($loan->getLoanRenewalCount() + 1);
-
-        $this->loanRepository->save($loan);
+        $this->loanRepository->updateLoanWhileRenewal(
+            $loan->getLoanId(),
+            $loan->getLoanDueDate()->modify('+7 days'),
+            $loan->getLoanRenewalCount() + 1
+        );
     }
 
     private function calculateFine(DateTimeImmutable $dueDate, DateTimeImmutable $returnDate): float {
