@@ -54,16 +54,18 @@ class LoanRepository {
 
     private function mapToLoan(array $loan): Loan {
         return new Loan(
-            $loan['loan_id'],
-            $loan['user_id'],
-            $loan['copy_id'],
-            $loan['payment_id'],
-            $loan['checkout_date'],
-            $loan['due_date'],
-            $loan['return_date'],
-            $loan['status'],
-            $loan['renewal_count'],
-            $loan['fine']
+            (int) $loan['loan_id'],
+            (int) $loan['user_id'],
+            (int) $loan['copy_id'],
+            (int) $loan['payment_id'],
+            new DateTimeImmutable($loan['checkout_date']),
+            new DateTimeImmutable($loan['due_date']),
+            $loan['return_date'] !== null
+                ? new DateTimeImmutable($loan['return_date'])
+                : null,
+            LoanStatus::from($loan['status']),
+            (int) $loan['renewal_count'],
+            (float) $loan['fine']
         );
     }
 
