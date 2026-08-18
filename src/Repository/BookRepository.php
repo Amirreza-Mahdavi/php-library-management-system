@@ -79,10 +79,10 @@ class BookRepository {
 
     private function mapToBook(array $book): Book {
         return new Book(
-            $book['book_id'],
+            (int) $book['book_id'],
             $book['title'],
             $book['author'],
-            $book['category_id'],
+            (int) $book['category_id'],
             $book['language']
         );
     }
