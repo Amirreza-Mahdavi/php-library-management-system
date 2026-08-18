@@ -14,7 +14,7 @@ class CopyRepository {
 
         foreach ($data as $copy) {
             if ($copy['copy_id'] === $id)
-                return $copy;
+                return $this->mapToCopy($copy);
         }
         return null;
     }
