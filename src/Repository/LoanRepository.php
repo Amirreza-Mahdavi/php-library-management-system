@@ -33,6 +33,22 @@ class LoanRepository {
         return null;
     }
 
+    public function updateLoanWhileReturninBook(int $loanId, DateTimeImmutable $returnDate, float $fine, LoanStatus $status): void{
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+
+        foreach ($data as &$loan) {
+            if((int) $loan['loan_id'] === $loanId){
+                $loan['return_date'] = $returnDate->format('Y-m-d H:i:s');
+                $loan['status'] = $status->value;
+                $loan['fine'] = $fine;
+                $newData[] = $this->mapToLoan($loan);
+                break;
+            }
+        }
+        unset($loan);
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
 
     public function save(Loan $loan): void {
         $data = json_decode(file_get_contents($this->file), true) ?? [];
