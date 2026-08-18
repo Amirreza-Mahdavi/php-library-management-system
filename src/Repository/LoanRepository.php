@@ -49,6 +49,20 @@ class LoanRepository {
         file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
     }
 
+    public function updateLoanWhileRenewal(int $loanId, DateTimeImmutable $dueDate, int $renewalCount): void {
+        $data = json_decode(file_get_contents($this->file), true) ?? [];
+
+        foreach ($data as &$loan) {
+            if((int) $loan['loan_id'] === $loanId){
+                $loan['due_date'] = $dueDate->format('Y-m-d H:i:s');
+                $loan['renewal_count'] = $renewalCount;
+                break;
+            }
+        }
+        unset($loan);
+        file_put_contents($this->file, json_encode($data, JSON_PRETTY_PRINT));
+    }
+
 
     public function save(Loan $loan): void {
         $data = json_decode(file_get_contents($this->file), true) ?? [];
