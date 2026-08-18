@@ -7,7 +7,7 @@ use LMS\Domain\Copy;
 use LMS\Enums\CopyStatus;
 
 class CopyRepository {
-    private string $file = __DIR__ . '/../../data/copies.json';
+    private string $file = __DIR__ . '/../../data/book_copies.json';
 
     public function findById(int $id): ?Copy {
         $data = json_decode(file_get_contents($this->file), true) ?? [];
