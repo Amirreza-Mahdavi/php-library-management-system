@@ -14,7 +14,7 @@ class Loan {
         private readonly int $paymentId,
         private readonly DateTimeImmutable $checkoutDate,
         private DateTimeImmutable $dueDate,
-        private readonly ?DateTimeImmutable $returnDate,
+        private ?DateTimeImmutable $returnDate,
         private LoanStatus $status,
         private int $renewalCount,
         private float $fine
