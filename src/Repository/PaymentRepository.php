@@ -2,6 +2,7 @@
 
 namespace LMS\Repository;
 
+use DateTimeImmutable;
 use LMS\Domain\Payment;
 use LMS\DTO\CreatePaymentRequest;
 use LMS\Traits\MetadataTrait;
@@ -40,10 +41,10 @@ class PaymentRepository {
 
     private function mapToPayment(array $payment): Payment {
         return new Payment(
-            $payment['payment_id'],
-            $payment['loan_id'],
-            $payment['amount'],
-            $payment['payment_date']
+            (int) $payment['payment_id'],
+            (int) $payment['loan_id'],
+            (float) $payment['amount'],
+            new DateTimeImmutable($payment['payment_date'])
         );
     }
 

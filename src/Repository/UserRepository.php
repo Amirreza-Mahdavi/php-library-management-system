@@ -91,10 +91,10 @@ class UserRepository {
 
     private function mapToUser(array $user): User {
         return new User(
-            $user['user_id'],
+            (int)$user['user_id'],
             $user['name'],
             $user['email'],
-            $user['role_id'],
+            (int)$user['role_id'],
             $user['password']
         );
     }

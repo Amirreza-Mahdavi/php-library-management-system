@@ -28,7 +28,7 @@ class CategoryRepository {
 
     private function mapToCategory(array $category): Category {
         return new Category(
-            $category['category_id'],
+            (int) $category['category_id'],
             $category['category_name']
         );
     }

@@ -19,7 +19,7 @@ class RoleRepository {
 
     private function mapToRole(array $role): Role {
         return new Role(
-            $role['role_id'],
+            (int) $role['role_id'],
             $role['role_name']
         );
     }
