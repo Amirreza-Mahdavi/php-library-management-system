@@ -9,7 +9,7 @@ class Console {
         return trim(fgets(STDIN));
     }
 
-    public function readInt(int $prompt): int {
+    public function readInt(string $prompt): int {
         echo $prompt;
         return trim(fgets(STDIN));
     }
