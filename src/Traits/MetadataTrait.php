@@ -9,7 +9,7 @@ Trait MetadataTrait {
     private string $metaFile = __DIR__ . '/../../data/metadata.json';
 
     public function getNextId(string $domain): int {
-        $metadata = json_decode(file_get_contents($this->metaFile, true));
+        $metadata = json_decode(file_get_contents($this->metaFile), true);
         $key = "next_{$domain}_id";
 
         if(!isset($metadata[$key]))
