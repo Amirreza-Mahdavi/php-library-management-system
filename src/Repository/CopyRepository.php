@@ -74,9 +74,9 @@ class CopyRepository {
 
     private function mapToCopy(array $copy): Copy {
         return new Copy(
-            $copy['copy_id'],
-            $copy['book_id'],
-            $copy['status'],
+            (int) $copy['copy_id'],
+            (int) $copy['book_id'],
+            CopyStatus::from($copy['status']),
             $copy['location']
         );
     }
