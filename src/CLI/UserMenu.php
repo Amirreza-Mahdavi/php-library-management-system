@@ -32,6 +32,7 @@ abstract class UserMenu {
         $newName = $this->console->readLine("Enter new name: ");
 
         $this->userService->updateUserName($user->getUserId(), $newName);
+        $this->console->success("Successfuly changed name");
     }
 
     protected function updatePassword(): void {
