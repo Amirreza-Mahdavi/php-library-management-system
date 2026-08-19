@@ -1,10 +1,10 @@
 <?php
 
-namespace LMS\Repository;
+namespace LMS\Repository\Impl;
 
 use LMS\Domain\Reservation;
 
-class ReservationRepository {
+class ReservationRepositoryImpl {
     private string $file = __DIR__ . '/../../data/reservations.json';
 
     public function findByUserId(int $userId): array {
