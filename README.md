@@ -164,17 +164,17 @@ Repositories are responsible for converting between **JSON arrays** and **Domain
 
 ```text
 php-library-management-system/
-├── data/               # JSON data store
+├── data/               
 ├── example/
-│   └── Main.php        # Application entry point
+│   └── Main.php        
 ├── src/
-│   ├── CLI/             # Menus and console interaction
-│   ├── DTO/              # Input validation / transport objects
-│   ├── Domain/            # Core domain entities
-│   ├── Enums/              # Backed enums (roles, statuses)
-│   ├── Repository/         # Repository interfaces + JSON implementations
-│   ├── Service/             # Business logic
-│   └── Traits/               # Shared reusable behavior
+│   ├── CLI/             
+│   ├── DTO/              
+│   ├── Domain/            
+│   ├── Enums/              
+│   ├── Repository/         
+│   ├── Service/             
+│   └── Traits/              
 ├── composer.json
 └── README.md
 ```
