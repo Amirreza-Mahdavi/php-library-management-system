@@ -5,7 +5,8 @@ namespace LMS\CLI;
 use Exception;
 use LMS\Service\AuthService;
 use LMS\Service\UserService;
-use LMs\Service\BookService;
+use LMS\Service\BookService;
+use LMS\Service\CategoryService;
 use LMS\CLI\Console;
 
 
@@ -14,6 +15,7 @@ abstract class UserMenu {
         protected readonly AuthService $authService,
         protected readonly UserService $userService,
         protected readonly BookService $bookService,
+        protected readonly CategoryService $categoryService,
         protected readonly Console $console
     ){}
 
@@ -119,6 +121,20 @@ abstract class UserMenu {
                 "{$book->getBookId()} - {$book->getTitle()} by {$book->getAuthor()}"
             );
         }
+    }
+
+    protected function showCategories(): void {
+        $categories = $this->categoryService->getCategories();
+        if(empty($categories)){
+            $this->console->error("No categories found");
+            return;
+        }
+        foreach ($categories as $category) {
+            $this->console->writeLine(
+                "{$category->getCategoryId()} - {$category->getCategoryName()}"
+            );
+        }
+        $this->console->pause();
     }
 
     protected function logout(): void {

@@ -15,6 +15,7 @@ use LMS\DTO\CreateLoanRequest;
 use LMS\Enums\LoanStatus;
 use LMS\Service\CopyService;
 use LMS\Service\LoanService;
+use LMS\Service\CategoryService;
 
 
 class AdminMenu extends UserMenu {
@@ -24,9 +25,10 @@ class AdminMenu extends UserMenu {
         UserService $userService,
         AuthService $authService,
         BookService $bookService,
+        CategoryService $categoryService,
         Console $console,
     ){
-        parent::__construct($authService, $userService, $bookService, $console);
+        parent::__construct($authService, $userService, $bookService, $categoryService, $console);
     }
 
     public function showMenu(): bool {
@@ -37,18 +39,21 @@ class AdminMenu extends UserMenu {
         $this->console->writeLine("5. Search Books By Title");
         $this->console->writeLine("6. Search Books By Author");
         $this->console->writeLine("7. Filter By Category (Enter Category Id)");
-        $this->console->writeLine("8. Show Books");
-        $this->console->writeLine("9. Show Members");
-        $this->console->writeLine("10. Add Book");
-        $this->console->writeLine("11. Remove Book");
-        $this->console->writeLine("12. Add Copy");
-        $this->console->writeLine("13. Remove Copy");
-        $this->console->writeLine("14. Filter Copies By Status");
-        $this->console->writeLine("15. Update Copy Status");
-        $this->console->writeLine("16. Checkout Book");
-        $this->console->writeLine("17. Return Book");
-        $this->console->writeLine("18. Renew Loan");
-        $this->console->writeLine("19. Logout");
+        $this->console->writeLine("8. Show Categories");
+        $this->console->writeLine("9. Show Books");
+        $this->console->writeLine("10. Show Members");
+        $this->console->writeLine("11. Add Category");
+        $this->console->writeLine("12. Remove Category");
+        $this->console->writeLine("13. Add Book");
+        $this->console->writeLine("14. Remove Book");
+        $this->console->writeLine("15. Add Copy");
+        $this->console->writeLine("16. Remove Copy");
+        $this->console->writeLine("17. Filter Copies By Status");
+        $this->console->writeLine("18. Update Copy Status");
+        $this->console->writeLine("19. Checkout Book");
+        $this->console->writeLine("20. Return Book");
+        $this->console->writeLine("21. Renew Loan");
+        $this->console->writeLine("22. Logout");
 
         $choice = $this->console->readInt("Choose an option: ");
         return $this->selectOption($choice);
@@ -78,39 +83,48 @@ class AdminMenu extends UserMenu {
                 $this->filterBooksByCategory();
                 return true;
             case 8:
-                $this->showBooks();
+                $this->showCategories();
                 return true;
             case 9:
-                $this->showMembers();
+                $this->showBooks();
                 return true;
             case 10:
-                $this->addBook();
+                $this->showMembers();
                 return true;
             case 11: 
-                $this->removeBook();
+                $this->addCategory();
                 return true;
             case 12:
-                $this->addCopy();
+                $this->removeCategory();
                 return true;
             case 13:
-                $this->removeCopy();
+                $this->addBook();
                 return true;
             case 14:
-                $this->filterCopiesByStatus();
+                $this->removeBook();
                 return true;
             case 15:
-                $this->updateCopyStatus();
+                $this->addCopy();
                 return true;
             case 16:
-                $this->checkoutBook();
+                $this->removeCopy();
                 return true;
             case 17:
-                $this->returnBook();
+                $this->filterCopiesByStatus();
                 return true;
             case 18:
-                $this->renewLoan();
+                $this->updateCopyStatus();
                 return true;
             case 19:
+                $this->checkoutBook();
+                return true;
+            case 20:
+                $this->returnBook();
+                return true;
+            case 21:
+                $this->renewLoan();
+                return true;
+            case 23:
                 $this->logout();
                 return true;
             default:
@@ -146,6 +160,24 @@ class AdminMenu extends UserMenu {
                 "{$member->getUserId()} - {$member->getUserName()} - {$member->getUserEmail()}"
             );
         }
+
+        $this->console->pause();
+    }
+    
+    private function addCategory(): void {
+        $name = $this->console->readLine("Enter category name: ");
+
+        $this->categoryService->addCategory($name);
+        $this->console->success("Successfully added category");
+
+        $this->console->pause();
+    }
+
+    private function removeCategory(): void {
+        $id = $this->console->readInt("Enter category id: ");
+
+        $this->categoryService->removeCategory($id);
+        $this->console->success("Successfully removed category");
 
         $this->console->pause();
     }

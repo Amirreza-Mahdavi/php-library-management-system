@@ -6,6 +6,7 @@ use Exception;
 use LMS\Service\UserService;
 use LMS\Service\AuthService;
 use LMS\Service\BookService;
+use LMS\Service\CategoryService;
 use LMS\CLI\Console;
 
 class MemberMenu extends UserMenu {
@@ -13,9 +14,10 @@ class MemberMenu extends UserMenu {
         UserService $userService,
         AuthService $authService,
         BookService $bookService,
+        CategoryService $categoryService,
         Console $console
     ){
-        parent::__construct($authService, $userService, $bookService, $console);
+        parent::__construct($authService, $userService, $bookService, $categoryService, $console);
     }
 
     public function showMenu(): bool {
@@ -27,7 +29,8 @@ class MemberMenu extends UserMenu {
         $this->console->writeLine("6. Search Books By Author");
         $this->console->writeLine("7. Filter By Category (Enter Category Id)");
         $this->console->writeLine("8. Show Books");
-        $this->console->writeLine("9. Logout");
+        $this->console->writeLine("9. Show Categories");
+        $this->console->writeLine("10. Logout");
 
         $choice = $this->console->readInt("Choose an option: ");
         return $this->selectOption($choice);
@@ -60,6 +63,9 @@ class MemberMenu extends UserMenu {
                 $this->showBooks();
                 return true;
             case 9:
+                $this->showCategories();
+                return true;
+            case 10:
                 $this->logout();
                 return true;
             default:
