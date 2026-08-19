@@ -9,7 +9,7 @@ use LMS\Repository\PaymentRepository;
 use LMS\Traits\MetadataTrait;
 
 class PaymentRepositoryImpl implements PaymentRepository {
-    private string $file = __DIR__ . '/../../data/payments.json';
+    private string $file = __DIR__ . '/../../../data/payments.json';
     use MetadataTrait;
 
     public function findByLoanId(int $loanId): ?Payment {

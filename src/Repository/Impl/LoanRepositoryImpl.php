@@ -10,7 +10,7 @@ use LMS\Repository\LoanRepository;
 use LMS\Traits\MetadataTrait;
 
 class LoanRepositoryImpl implements LoanRepository {
-    private string $file = __DIR__ . '/../../data/loans.json';
+    private string $file = __DIR__ . '/../../../data/loans.json';
     use MetadataTrait;
 
     public function findByUserId(int $userId): array {

@@ -7,7 +7,7 @@ use LMS\Repository\UserRepository;
 use LMS\Domain\User;
 
 class UserRepositoryImpl implements UserRepository {
-    private string $file = __DIR__ . '/../../data/users.json';
+    private string $file = __DIR__ . '/../../../data/users.json';
 
     public function findById(int $id): ?User {
          $data = json_decode(file_get_contents($this->file), true) ?? [];

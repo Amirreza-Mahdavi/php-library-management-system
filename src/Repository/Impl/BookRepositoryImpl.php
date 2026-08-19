@@ -6,7 +6,7 @@ use LMS\Repository\BookRepository;
 use LMS\Domain\Book;
 
 class BookRepositoryImpl implements BookRepository {
-    private string $file = __DIR__ . '/../../data/books.json';
+    private string $file = __DIR__ . '/../../../data/books.json';
 
     public function findAll(): array {
          $data = json_decode(file_get_contents($this->file), true) ?? [];

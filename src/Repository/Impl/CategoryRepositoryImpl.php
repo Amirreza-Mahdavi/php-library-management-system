@@ -6,7 +6,7 @@ use LMS\Domain\Category;
 use LMS\Repository\CategoryRepository;
 
 class CategoryRepositoryImpl implements CategoryRepository {
-    private string $file = __DIR__ . '/../../data/categories.json';
+    private string $file = __DIR__ . '/../../../data/categories.json';
 
     public function findAll(): array {
          $data = json_decode(file_get_contents($this->file), true) ?? [];
@@ -39,7 +39,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
         $newData = [];
 
         foreach ($data as $category) {
-            if($category['copy_id'] !== $id) 
+            if($category['category_id'] !== $id) 
                 $newData[] = $category;
         }
         file_put_contents($this->file, json_encode($newData, JSON_PRETTY_PRINT));
