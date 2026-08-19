@@ -124,7 +124,7 @@ class AdminMenu extends UserMenu {
             case 21:
                 $this->renewLoan();
                 return true;
-            case 23:
+            case 22:
                 $this->logout();
                 return true;
             default:
