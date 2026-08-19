@@ -25,4 +25,9 @@ class Console {
     public function error(string $message): void {
         echo "[ERROR] " . $message . PHP_EOL;
     }
+
+    public function pause(string $message = "Press Enter to continue..."): void {
+        echo PHP_EOL . $message;
+        fgets(STDIN);
+    }
 }

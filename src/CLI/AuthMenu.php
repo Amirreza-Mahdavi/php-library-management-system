@@ -50,6 +50,8 @@ class AuthMenu {
         catch(Exception $e) {
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     private function register(): void {
@@ -66,5 +68,7 @@ class AuthMenu {
         catch(Exception $e) {
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 }

@@ -24,7 +24,7 @@ class Loan {
         return $this->loanId;
     }
     public function getLoanUserId(){
-        return $this->userId;
+        return $this->userId; 
     }
     public function getLoanCopyId(){
         return $this->copyId;
@@ -66,5 +66,4 @@ class Loan {
     public function setFine(float $fine): void {
         $this->fine = $fine;
     }
-
 }

@@ -132,6 +132,8 @@ class AdminMenu extends UserMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     private function showMembers(): void {
@@ -144,6 +146,8 @@ class AdminMenu extends UserMenu {
                 "{$member->getUserId()} - {$member->getUserName()} - {$member->getUserEmail()}"
             );
         }
+
+        $this->console->pause();
     }
 
     private function addBook(): void {
@@ -156,6 +160,8 @@ class AdminMenu extends UserMenu {
 
         $this->bookService->addBook($request);
         $this->console->success("Successfully added book");
+
+        $this->console->pause();
     }
 
     private function removeBook(): void {
@@ -163,6 +169,8 @@ class AdminMenu extends UserMenu {
 
         $this->bookService->removeBook($id);
         $this->console->success("Successfully removed book");
+
+        $this->console->pause();
     }
 
     private function addCopy(): void {
@@ -177,6 +185,8 @@ class AdminMenu extends UserMenu {
 
         $this->copyService->addCopy($request);
         $this->console->success("Successfully added copy");
+
+        $this->console->pause();
     }
 
     private function showCopyStatusMenu(): int {
@@ -205,6 +215,8 @@ class AdminMenu extends UserMenu {
 
         $this->copyService->removeCopy($id);
         $this->console->success("Successfully removed copy");
+
+        $this->console->pause();
     }
 
     private function filterCopiesByStatus(): void {
@@ -222,6 +234,8 @@ class AdminMenu extends UserMenu {
                 "{$copy->getCopyId()} - $bookTitle"
             );
         }
+
+        $this->console->pause();
     }
 
     private function updateCopyStatus(): void {
@@ -232,6 +246,8 @@ class AdminMenu extends UserMenu {
 
         $this->copyService->updateStatus($copyId, $status);
         $this->console->success("Successfully updated status");
+
+        $this->console->pause();
     }
 
     private function checkoutBook(): void {
@@ -253,6 +269,8 @@ class AdminMenu extends UserMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     private function returnBook(): void {
@@ -266,6 +284,8 @@ class AdminMenu extends UserMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     private function renewLoan(): void {
@@ -279,6 +299,8 @@ class AdminMenu extends UserMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     private function showLoanStatusMenu(): int {

@@ -25,6 +25,8 @@ abstract class UserMenu {
         $this->console->writeLine("Id: {$user->getUserId()}");
         $this->console->writeLine("Name: {$user->getUserName()}");
         $this->console->writeLine("Email: {$user->getUserEmail()}");
+
+        $this->console->pause();
     }
 
     protected function updateName(): void {
@@ -33,6 +35,8 @@ abstract class UserMenu {
 
         $this->userService->updateUserName($user->getUserId(), $newName);
         $this->console->success("Successfuly changed name");
+
+        $this->console->pause();
     }
 
     protected function updatePassword(): void {
@@ -47,6 +51,8 @@ abstract class UserMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     protected function showBorrowedBooks(): void {
@@ -63,6 +69,8 @@ abstract class UserMenu {
         catch(Exception $e){
             $this->console->error($e->getMessage());
         }
+
+        $this->console->pause();
     }
 
     protected function searchBooksByTitle(): void {
@@ -77,6 +85,8 @@ abstract class UserMenu {
                 "{$book->getBookId()} - {$book->getTitle()} by {$book->getAuthor()}"
             );
         }
+
+        $this->console->pause();
     }
 
     protected function searchBooksByAuthor(): void {
@@ -89,10 +99,14 @@ abstract class UserMenu {
         $id = $this->console->readInt("Enter Category Id: ");
 
         $this->displayBooks($this->bookService->filterByCategory($id));
+
+        $this->console->pause();
     }
 
     protected function showBooks(): void {
         $this->displayBooks($this->bookService->getBooks());
+
+        $this->console->pause();
     }
 
     private function displayBooks(array $books): void {
@@ -110,5 +124,7 @@ abstract class UserMenu {
     protected function logout(): void {
         $this->authService->logout();
         $this->console->success("Logout successful");
+
+        $this->console->pause();
     }
 }
