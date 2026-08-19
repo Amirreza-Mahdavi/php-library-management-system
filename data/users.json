@@ -1,16 +1,16 @@
 [
     {
         "user_id": 1,
-        "name": "Test Librarian",
-        "email": "test.librarian@gmail.com",
+        "name": "Demo Admin",
+        "email": "admin@example.com",
         "role_id": 1,
-        "password": "$2y$12$UDaN6kRi14gZF9vz4SKdTuolcDW7J.y/QUFTQ4t1HFUJQKrbFTb6W"
+        "password": "$2y$12$VPpQ9OPes4QLIyccGbeXnOmXoAOtaMlJSCnoz9\/32Iq3C6w5PSB3i"
     },
     {
         "user_id": 2,
-        "name": "Test Member",
-        "email": "test.member@gmail.com",
+        "name": "Demo Member",
+        "email": "member@example.com",
         "role_id": 2,
-        "password": "$2y$12$IfbMYKrszk/s3LBganKYBuRlHLcN88MR0MCtGwKEoExdmlK4vz9XK"
+        "password": "$2y$12$OBgrs2j9znTho7Q83D4J2OlGH.fII1hsRXoZJbs9N5XWOfRh.cAa2"
     }
 ]
