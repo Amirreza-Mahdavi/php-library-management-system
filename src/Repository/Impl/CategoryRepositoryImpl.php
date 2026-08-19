@@ -1,6 +1,6 @@
 <?php 
 
-namespace LMS\Respository\Impl;
+namespace LMS\Repository\Impl;
 
 use LMS\Domain\Category;
 use LMS\Repository\CategoryRepository;
